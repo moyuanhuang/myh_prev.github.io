@@ -310,6 +310,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/17/relevant-CLI-for-rails/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/17/relevant-CLI-for-rails/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -334,13 +344,67 @@
       
         
           
-            <p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><br></script><br>Took me couple of days to setup the environment of ruby and rails. As you might also have experienced the issues below, I recorded it in hope that it may help. The overall pipeline is</p>
-<p>$$<br>Ruby \leftarrow Rails<br>$$</p>
-<ol>
-<li>rbenv &amp; rvm</li>
-<li>gem</li>
-<li>bundle</li>
-</ol>
+            <p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><br></script><br>As a ruby beginner(or even a full-stack development beginner!), it took me couple of days to setup the environment of ruby and rails. As you might also have experienced the issues below, I recorded it in hope that it may help.</p>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby"></a>ruby</h3><p>I am using macOS Sierra, and it has build-in ruby version of 2.0.0, which is not enough for meeting the requirement of Ruby on Rails.</p>
+<pre><code>$ ruby -v
+ruby 2.0.0p648 (2015-12-16 revision 53162) [universal.x86_64-darwin16]
+</code></pre><p>We’ll thus need to update our ruby to a satisfiable version. To replace the build-in version with a new one, however, seems to be a bad idea cause you may have a lot dependency issues. With that being said, it is possibel that we can have different versions of ruby in our computer at the same time? The answer is absolutely YES! Just think of Anaconda if you have dealt with python version control. This is where our cute version management staff appear.</p>
+<h3 id="rbenv-vs-rvm"><a href="#rbenv-vs-rvm" class="headerlink" title="rbenv vs. rvm"></a>rbenv vs. rvm</h3><p>There are two prevailing ruby version control tools, namely <a href="https://rvm.io/" target="_blank" rel="external">rvm</a> and <a href="https://github.com/rbenv/rbenv" target="_blank" rel="external">rbenv</a>. From my perspective, rvm gives you more flexibility, but rbenv would be more simpler and for beginners. I thus arbitrarily use rbenv as my Ruby version control tool. As a macOS user, I used <a href="https://brew.sh/" target="_blank" rel="external">homebrew</a> for package management, fantastic tool like apt-get and yum under Linux.</p>
+<pre><code>brew update
+brew install rbenv
+</code></pre><p>Upon finishing, pay attention to the <strong>caveat</strong>, adding <code>eval &quot;$(rbenv init -)&quot;</code> to your shell configuration file, i.e. <code>~/.bashrc</code> or <code>~/.zshrc</code>. For me, I’m using <a href="http://ohmyz.sh/" target="_blank" rel="external">oh-my-zsh</a> so my configuration file would be <code>~/.zshrc</code>.</p>
+<pre><code>$ source ~/.zshrc
+$ rbenv -v
+rbenv 1.1.0
+</code></pre><p>Great! Let’s see how <code>rbenv</code> could help simplifying our life. </p>
+<h4 id="ruby-installation"><a href="#ruby-installation" class="headerlink" title="ruby installation."></a>ruby installation.</h4><p>Here I suggest install ruby 2.4.0, which is recommended by the official website, since it’s currently the stable version.</p>
+<pre><code>rbenv install --list    # list all available ruby version for installation
+rbenv install 2.4.0     # install ruby version 2.4.0
+</code></pre><h4 id="version-listing"><a href="#version-listing" class="headerlink" title="version listing."></a>version listing.</h4><p>Now that we finished installing a new version of ruby, cool! Let’s see what happend in our computer.</p>
+<pre><code>$rbenv versions
+* system
+2.4.0
+</code></pre><p>This means that there are currently 2 versions of ruby: system(2.0.0) and 2.4.0(we just installed it!). The star means we are using the 2.0.0 version. Now let’s change it to the better one.</p>
+<h4 id="version-changing"><a href="#version-changing" class="headerlink" title="version changing"></a>version changing</h4><pre><code>rbenv global 2.4.0  # change the global ruby environment
+rbenv local 2.4.0   # change the local ruby environment
+rbenv shell 2.4.0   # change the ruby environment in shell
+
+$ rbenv versions
+system
+* 2.4.0 (set by /Users/mo/.ruby-version)
+$ ruby -v
+ruby 2.4.0p0 (2016-12-24 revision 57164) [x86_64-darwin16]
+</code></pre><p>Well done! We’ve changed our ruby version to 2.4.0.</p>
+<h3 id="gem"><a href="#gem" class="headerlink" title="gem"></a>gem</h3><p>What is <code>gem</code>? It’s actually a management tool for your ruby packages. Perfect! Now that we got <code>rbenv</code> for managing different ruby, and <code>gem</code> to manage our packages under ruby, such as, Rails!</p>
+<p><code>gem</code> is included in ruby later than 1.9, we can directly check our gem version.</p>
+<pre><code>$ gem -v
+2.6.10
+</code></pre><p>Now let’s use gem to install rails. </p>
+<pre><code>$ gem update --system  # update gem itslef
+$ gem install rails
+$ gem list  # list all packages installed
+...
+rails (5.0.2)
+...
+</code></pre><p>Note that <code>gem</code> would install the newest version(5.0.2) by default. However the most used rails version is 4.2.8. To specify the install version, you can use <code>gem install rails 4.2.8</code>. OK, we’ve got ruby and rails now, what’s next?</p>
+<pre><code>$ cd ~
+$ rails _4.2.8_ new blog  # specify rails to use 4.2.8 version
+$ cd blog
+$ rails s  # shortcut for rails server
+</code></pre><p>Now open your browser and type <a href="http://localhost:3000/" target="_blank" rel="external">http://localhost:3000/</a>, enjoy!</p>
+<h3 id="bundle"><a href="#bundle" class="headerlink" title="bundle"></a>bundle</h3><p>Another issue to mention that I think is good to know. Each rails project has its own <code>gemset</code>, a set of ruby packages used under this project. If we clone someone else rails project but don’t have some of packages required, that would lead to some malfunctioning of the website.</p>
+<p>So the question is, how do we know each projects’ <code>gemset</code>? How to check and install the missing gems? The answer lies in the <code>Gemfile</code> &amp; <code>Gemfile.lock</code> under the project.</p>
+<pre><code>$ vim Gemfile  # if you don&apos;t have it, try bundle init first
+
+# your Gemfile should look like this
+source &apos;https://rubygems.org&apos;
+gem &apos;rails&apos;, &apos;4.1.0.rc2&apos;
+gem &apos;rack-cache&apos;
+gem &apos;nokogiri&apos;, &apos;~&gt; 1.6.1&apos;
+</code></pre><p>The first line tells where to find the missing gems. The rest of the line tells us which gem the project is using and their versions. In this way, we can easily compare those gems to our local gems to find the missing ones. Actually, there is a CLI for doing the whole thing: <code>bundler</code>.</p>
+<pre><code>$ bundle  # shortcut for bundle install
+</code></pre><p>The Gemfile.lock is for others to deploy your project much easier. When they run <code>bundle install</code>, <code>bundler</code> will find the <code>Gemfile.lock</code> and skip the dependency resolution step. Instead, it will install all of the same gems that you used on the original machine.</p>
+<h3 id="useful-links-for-beginner"><a href="#useful-links-for-beginner" class="headerlink" title="useful links for beginner"></a>useful links for beginner</h3><p><a href="https://github.com/bbatsov/ruby-style-guide/" target="_blank" rel="external">Ruby style guide</a><br><a href="https://github.com/bbatsov/rails-style-guide" target="_blank" rel="external">Rails style guide</a></p>
 
           
         
@@ -428,6 +492,15 @@
 
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
           
 
         </nav>
@@ -565,7 +638,36 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'myhuang';
+      var disqus_identifier = 'index.html';
+
+      var disqus_title = "";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -583,37 +685,14 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
   
 
 
 
 
 
-  
 
 
-
-
-
-  
 
 
 
