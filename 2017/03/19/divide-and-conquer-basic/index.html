@@ -95,7 +95,7 @@ simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
 <meta property="og:site_name" content="my.huang">
 <meta property="og:description" content="Multiplying polynomialsinput $A(x) = 3x^2 + 2x + 5$,and $B(x) = 5x^2 + x + 2$compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$
 simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
-<meta property="og:updated_time" content="2017-03-20T05:20:46.000Z">
+<meta property="og:updated_time" content="2017-03-20T05:22:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="divide and conquer: basic">
 <meta name="twitter:description" content="Multiplying polynomialsinput $A(x) = 3x^2 + 2x + 5$,and $B(x) = 5x^2 + x + 2$compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$
@@ -367,7 +367,7 @@ simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
 }
 </code></pre><h3 id="Karatsuba-approach"><a href="#Karatsuba-approach" class="headerlink" title="Karatsuba approach"></a>Karatsuba approach</h3><p>reduce 4 multiplication to 3 multiplication.<br>$$ a_1b_0 + a_0b_1 = (a_1 + a_0)(b_1 + b_0) - a_1b_1 - a_0b_0 $$</p>
 <h3 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>naive algorithm: $O(n^2)$<br>naive divide &amp; conquer: $T(n) = 4T(n/2) + O(n^2) \rightarrow O(n^2)$<br>Karatsuba approach: $T(n) = 3T(n/2) + O(n^2) \rightarrow O(n^{1.58})$</p>
-<h2 id="Master-Theorem"><a href="#Master-Theorem" class="headerlink" title="Master Theorem"></a>Master Theorem</h2><p>Master theorem is pretty useful when solving the time complexity of a divide and conquer algorithm. If $T(n) = aT(n/b) + O(n^d)$, then<br>$T(n) = \left { \begin{matrix}<br>        O(n^d), \text{if } d &gt; \log _b^a\<br>        O(n^d \log n), \text{if } d =  \log _b^a\<br>        O(n^{\log _b^a}), \text{if } d &lt;  \log _b^a\<br>    \end{matrix}\right.<br>$</p>
+<h2 id="Master-Theorem"><a href="#Master-Theorem" class="headerlink" title="Master Theorem"></a>Master Theorem</h2><p>Master theorem is pretty useful when solving the time complexity of a divide and conquer algorithm. If $T(n) = aT(n/b) + O(n^d)$, then<br>$T(n) = \left { \begin{matrix} O(n^d), \text{if } d &gt; \log _b^a\ O(n^d \log n), \text{if } d =  \log _b^a\  O(n^{\log _b^a}), \text{if } d &lt;  \log _b^a\ \end{matrix}\right. $</p>
 <h2 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h2><pre><code>merge_sort(A[0..n-1]){
     if(n == 1)
         return A;
