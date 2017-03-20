@@ -296,7 +296,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T21:52:09-07:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T22:00:48-07:00">
                 2017-03-19
               </time>
             
@@ -347,8 +347,8 @@
             <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-<h2 id="Multiplying-polynomials"><a href="#Multiplying-polynomials" class="headerlink" title="Multiplying polynomials"></a>Multiplying polynomials</h2><p>$$ A(x) = 3x^2 + 2x + 5 $$<br>$$ B(x) = 5x^2 + x + 2 $$<br>$$ A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10 $$</p>
-<h3 id="simplyfying-input-amp-output"><a href="#simplyfying-input-amp-output" class="headerlink" title="simplyfying input &amp; output"></a>simplyfying input &amp; output</h3><p>$$ n = 3, A = (3,2,5), B = (5,1,2) $$<br>$$ c = (15,13,33,9,10) $$</p>
+<h2 id="Multiplying-polynomials"><a href="#Multiplying-polynomials" class="headerlink" title="Multiplying polynomials"></a>Multiplying polynomials</h2><p>input $A(x) = 3x^2 + 2x + 5$,<br>and $B(x) = 5x^2 + x + 2$<br>compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$</p>
+<h3 id="simplyfying-input-amp-output"><a href="#simplyfying-input-amp-output" class="headerlink" title="simplyfying input &amp; output"></a>simplyfying input &amp; output</h3><p>$ n = 3, A = (3,2,5), B = (5,1,2) $<br>$ c = (15,13,33,9,10) $</p>
 <h3 id="naive-divide-amp-conquer"><a href="#naive-divide-amp-conquer" class="headerlink" title="naive divide &amp; conquer"></a>naive divide &amp; conquer</h3><p>We can now just look at the index. Divide A(x) into two equal length part[0..n/2-1], [n/2..n-1]. Do the same to B(x).</p>
 <pre><code>multi2(A, B, len, a_begin, b_begin){
     coef = [0..2n-2]   // highest index would be (n-1)+(n-1)
@@ -366,8 +366,8 @@
     return coef
 }
 </code></pre><h3 id="Karatsuba-approach"><a href="#Karatsuba-approach" class="headerlink" title="Karatsuba approach"></a>Karatsuba approach</h3><p>reduce 4 multiplication to 3 multiplication.<br>$$ a_1b_0 + a_0b_1 = (a_1 + a_0)(b_1 + b_0) - a_1b_1 - a_0b_0 $$</p>
-<h3 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>naive algorithm: $O(n^2)$<br>naive divide &amp; conquer: $T(n) = 4T(n/2) + O(n^2) \rightarrow O(n^2)$<br>Karatsuba approach: $T(n) = 3T(n/2) + O(n^2) \rightarrow O(n^1.58)$</p>
-<h2 id="Master-Theorem"><a href="#Master-Theorem" class="headerlink" title="Master Theorem"></a>Master Theorem</h2><p>Master theorem is pretty useful when solving the time complexity of a divide and conquer algorithm. If T(n) = aT(n/b) + O(n^d), then<br>\begin{equation}<br>    T(n) = \left { \begin{matrix}<br>        O(n^d), \text{if } d &gt; \log _b^a\<br>        O(n^d \log n), \text{if } d =  \log _b^a\<br>        O(n^{\log _b^a}), \text{if } d &lt;  \log _b^a\<br>    \end{matrix}\right.<br>\end{equation}</p>
+<h3 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>naive algorithm: $O(n^2)$<br>naive divide &amp; conquer: $T(n) = 4T(n/2) + O(n^2) \rightarrow O(n^2)$<br>Karatsuba approach: $T(n) = 3T(n/2) + O(n^2) \rightarrow O(n^{1.58})$</p>
+<h2 id="Master-Theorem"><a href="#Master-Theorem" class="headerlink" title="Master Theorem"></a>Master Theorem</h2><p>Master theorem is pretty useful when solving the time complexity of a divide and conquer algorithm. If $T(n) = aT(n/b) + O(n^d)$, then<br>$T(n) = \left { \begin{matrix}<br>        O(n^d), \text{if } d &gt; \log _b^a\<br>        O(n^d \log n), \text{if } d =  \log _b^a\<br>        O(n^{\log _b^a}), \text{if } d &lt;  \log _b^a\<br>    \end{matrix}\right.<br>$</p>
 <h2 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h2><pre><code>merge_sort(A[0..n-1]){
     if(n == 1)
         return A;
@@ -415,8 +415,7 @@ partition(A, start, end){
     swap(A[left], A[mid]);
     return left;
 }
-</code></pre><p>To better avoid qsort() degenerate to O(n^2), we can <strong>randomly shuffle</strong> the array, and <strong>select random pivot</strong> each time.</p>
-<p>Also, to eliminate the last time of recursive call(redundant), we can change our <code>qsort()</code> into the algorithm below.</p>
+</code></pre><p>To better avoid qsort() degenerate to O(n^2), we can <strong>randomly shuffle</strong> the array, and <strong>select random pivot</strong> each time. Also, to eliminate the last time of recursive call(redundant), we can change our <code>qsort()</code> into the algorithm below.</p>
 <pre><code>qsort(A, left, right){
     while(left &lt; right){
         mid = partition(A, left, right);
@@ -436,6 +435,160 @@ partition(A, start, end){
 for all k in [m1..m2-1], A[k] = x
 for all k in [m2..right], A[k] &gt; x
 </code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://moyuanhuang.github.io/2017/03/18/greedy-algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyuan Huang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="my.huang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/18/greedy-algorithm/" itemprop="url">
+                  greedy algorithm: basic
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-18T21:39:48-07:00">
+                2017-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/18/greedy-algorithm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/18/greedy-algorithm/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><br></script></p>
+<h2 id="car-fueling"><a href="#car-fueling" class="headerlink" title="car fueling"></a>car fueling</h2><p>You have to travel from A to B, are a few gas stations $ g_1, g_2, …, g_n $ on your way. What is the fewest possible time of fueling?</p>
+<p><strong>Ans</strong>: Every time, drive to the farthest gas station possible.<br><strong>Proof</strong>: Show that drive to the farthest station would not result in missing an optimal solution.</p>
+<ol>
+<li>Suppose that, instead of driving to the farthest gas station $g_{far}$, we drive to somewher closer than the starting point, denote as <em>g_close</em> .</li>
+<li>Then the next gas station possible is no farther than if we stop at $g_{far}$.</li>
+<li>This means stop at $g_{close}$ would not yield a better solution.</li>
+<li>Thus, to stop at $g_{far}$ would give us an optimal solution.</li>
+</ol>
+<p><strong>Time Complexity</strong>: O(n)</p>
+<h2 id="covering-points-by-segments"><a href="#covering-points-by-segments" class="headerlink" title="covering points by segments"></a>covering points by segments</h2><p>Given a set of n points $x_1, x_2, … , x_n$, output the minimum number of segments of unit length needed to cover all the points.</p>
+<p><strong>Ans</strong>: cover the left most node with a unit segment with left end of this point.</p>
+<p><strong>Proof</strong>:</p>
+<ol>
+<li>Suppose that, instead of covering the left most node with the unit segment’s left end(first solution), we use the some right sided point in the segment(second solution). We denote the right end of the first solution as $p_right$.</li>
+<li>Then the right most point covered by the second solution would on the left side of $p_right$.</li>
+<li>This means that the second solution would cover no greater points than the first solution.</li>
+<li><strong>Suppose the second solution yield an optimal solution</strong>. As deducted above, the first solution would eventually yield an optimal solution.</li>
+</ol>
+<p><strong>Time Complexity</strong>: O(n)</p>
+<h2 id="other-trivial-greedy-problem"><a href="#other-trivial-greedy-problem" class="headerlink" title="other trivial greedy problem"></a>other trivial greedy problem</h2><ol>
+<li><strong>organizing a party</strong>: Input a list of pairs of people who know each other, output a maximum number n to invite, in which it does not contain any people who knows less than 2 people or who doesn’t know less than two people.</li>
+<li><strong>money changing</strong>: The minimum coins needed to change an integer , using{1,5,10}. Note that the greedy solution doesn’t hold when the coins are something like{1,4,6}, non dividable to each other.</li>
+</ol>
+
           
         
       
@@ -705,7 +858,7 @@ gem &apos;nokogiri&apos;, &apos;~&gt; 1.6.1&apos;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

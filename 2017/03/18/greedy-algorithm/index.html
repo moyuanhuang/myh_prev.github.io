@@ -90,14 +90,14 @@
 <meta name="description" content="car fuelingYou have to travel from A to B, are a few gas stations $ g_1, g_2, …, g_n $ on your way. What is the fewest possible time of fueling?
 Ans: Every time, drive to the farthest gas station pos">
 <meta property="og:type" content="article">
-<meta property="og:title" content="greedy algorithm">
+<meta property="og:title" content="greedy algorithm: basic">
 <meta property="og:url" content="https://moyuanhuang.github.io/2017/03/18/greedy-algorithm/index.html">
 <meta property="og:site_name" content="my.huang">
 <meta property="og:description" content="car fuelingYou have to travel from A to B, are a few gas stations $ g_1, g_2, …, g_n $ on your way. What is the fewest possible time of fueling?
 Ans: Every time, drive to the farthest gas station pos">
-<meta property="og:updated_time" content="2017-03-19T06:21:12.000Z">
+<meta property="og:updated_time" content="2017-03-20T05:10:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="greedy algorithm">
+<meta name="twitter:title" content="greedy algorithm: basic">
 <meta name="twitter:description" content="car fuelingYou have to travel from A to B, are a few gas stations $ g_1, g_2, …, g_n $ on your way. What is the fewest possible time of fueling?
 Ans: Every time, drive to the farthest gas station pos">
 
@@ -133,7 +133,7 @@ Ans: Every time, drive to the farthest gas station pos">
 
 
 
-  <title> greedy algorithm | my.huang </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> greedy algorithm: basic | my.huang </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -283,7 +283,7 @@ Ans: Every time, drive to the farthest gas station pos">
             
             
               
-                greedy algorithm
+                greedy algorithm: basic
               
             
           </h1>
@@ -354,7 +354,9 @@ Ans: Every time, drive to the farthest gas station pos">
 <li>Thus, to stop at $g_{far}$ would give us an optimal solution.</li>
 </ol>
 <p><strong>Time Complexity</strong>: O(n)</p>
-<h2 id="covering-points-by-segments"><a href="#covering-points-by-segments" class="headerlink" title="covering points by segments"></a>covering points by segments</h2><p>Given a set of n points $x_1, x_2, … , x_n$, output the minimum number of segments of unit length needed to cover all the points.<br><strong>Ans</strong>: cover the left most node with a unit segment with left end of this point.<br><strong>Proof</strong>:</p>
+<h2 id="covering-points-by-segments"><a href="#covering-points-by-segments" class="headerlink" title="covering points by segments"></a>covering points by segments</h2><p>Given a set of n points $x_1, x_2, … , x_n$, output the minimum number of segments of unit length needed to cover all the points.</p>
+<p><strong>Ans</strong>: cover the left most node with a unit segment with left end of this point.</p>
+<p><strong>Proof</strong>:</p>
 <ol>
 <li>Suppose that, instead of covering the left most node with the unit segment’s left end(first solution), we use the some right sided point in the segment(second solution). We denote the right end of the first solution as $p_right$.</li>
 <li>Then the right most point covered by the second solution would on the left side of $p_right$.</li>
@@ -417,6 +419,10 @@ Ans: Every time, drive to the farthest gas station pos">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/19/divide-and-conquer-basic/" rel="prev" title="divide and conquer: basic">
+                divide and conquer: basic <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +501,7 @@ Ans: Every time, drive to the farthest gas station pos">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -683,7 +689,7 @@ Ans: Every time, drive to the farthest gas station pos">
       var disqus_shortname = 'myhuang';
       var disqus_identifier = '2017/03/18/greedy-algorithm/';
 
-      var disqus_title = "greedy algorithm";
+      var disqus_title = "greedy algorithm: basic";
 
 
       function run_disqus_script(disqus_script) {
