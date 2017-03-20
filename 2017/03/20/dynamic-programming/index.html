@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="algorithm," />
 
 
 
@@ -87,12 +87,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="my.huang">
-<meta property="og:url" content="https://moyuanhuang.github.io/index.html">
+<meta name="description" content="This post is to review the frequently asked problems in dynamic programming.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dynamic programming">
+<meta property="og:url" content="https://moyuanhuang.github.io/2017/03/20/dynamic-programming/index.html">
 <meta property="og:site_name" content="my.huang">
+<meta property="og:description" content="This post is to review the frequently asked problems in dynamic programming.">
+<meta property="og:image" content="https://moyuanhuang.github.io/2017/03/20/dynamic-programming/demo.png">
+<meta property="og:image" content="https://moyuanhuang.github.io/2017/03/20/dynamic-programming/placing_parentheses.png">
+<meta property="og:updated_time" content="2017-03-20T21:33:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="my.huang">
+<meta name="twitter:title" content="dynamic programming">
+<meta name="twitter:description" content="This post is to review the frequently asked problems in dynamic programming.">
+<meta name="twitter:image" content="https://moyuanhuang.github.io/2017/03/20/dynamic-programming/demo.png">
 
 
 
@@ -120,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://moyuanhuang.github.io/"/>
+  <link rel="canonical" href="https://moyuanhuang.github.io/2017/03/20/dynamic-programming/"/>
 
 
 
 
 
-  <title> my.huang </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> dynamic programming | my.huang </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -151,9 +158,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -246,9 +251,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -278,10 +283,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/03/20/dynamic-programming/" itemprop="url">
-                  dynamic programming
-                </a>
+                dynamic programming
               
             
           </h1>
@@ -342,464 +344,145 @@
       
 
       
+        <p>This post is to review the frequently asked problems in dynamic programming.</p>
+<a id="more"></a>
+<h2 id="coin-changing"><a href="#coin-changing" class="headerlink" title="coin changing"></a>coin changing</h2><p>Unlike the previous coin changing problem, we here have denominations that are not divisible to each other, say {1,5,6}. How we gonna deal with it?</p>
+<pre><code>coin_change(x){
+    dp[0..x] = infinity
+    dp[0] = 0;
+    for i in [0..x]
+        dp[i] = min(dp[i-1] + 1, dp[i-5] + 1, dp[i-6] + 1)
+        // simply see negative index as infinity
+}
+</code></pre><h2 id="edit-distance"><a href="#edit-distance" class="headerlink" title="edit distance"></a>edit distance</h2><p>the minimum number of operations to transform one stirng into another. The operation includes: match, mismatch, insertion, deletion.</p>
+<pre><code>edit_distance(A[0..m], B[0..n]){
+    for i in [0..m]
+        dp[i,0] = i;
+    for i in [0..n]
+        dp[0,i] = i;
+    for j in [1..m]
+        for i in [1..n]
+            match = dp[i-1, j-1];
+            mismatch = dp[i-1, j-1] + 1;
+            insertion = dp[i, j-1] + 1;
+            deletion = dp[i-1, j] + 1;
+            if(A[j] == B[i])
+                dp[i,j] = min(match, insertion, deletion);
+            else
+                dp[i,j] = min(mismatch, insertion, deletion);
+    return dp[n, m];
+}
+</code></pre><p><img title="A=editing, B=distance" src="/2017/03/20/dynamic-programming/demo.png" width="50%" height="50%"></p>
+<p>The next question is, how do we retrive the optimal alignment?</p>
+<pre><code>output_alignment(i, j){
+    if(i == 0 and j == 0)
+        return;
+    if(dp[i, j] == dp[i-1, j] + 1){
+        output_alignment(i-1, j);
+        print &quot;deletion&quot;;
+    }
+    else if(dp[i, j] == dp[i, j-1] + 1){
+        output_alignment(i, j-1);
+        print &quot;insertion&quot;;
+    }
+    else{
+        output_alignment(i-1, j-1);
+        print &quot;match \ mismatch&quot;;
+    }
+}
+</code></pre><h2 id="knapsack"><a href="#knapsack" class="headerlink" title="knapsack"></a>knapsack</h2><p>knapsack w/ repetition: $ dp[w, i] = max_{i \leq w}(dp[w - wi] + val[i]) $.<br>knapsack w/o repetition: $ dp[w, i] = max(dp[w, i - 1], dp[w - wi, i - 1] + val[i]) $.</p>
+<pre><code>knapsack(W){
+    dp[0..W, 0..n] = 0;
+    for i in [0..n]{
+        for w in [0..W]{
+            if wi &lt; w
+                dp[w, i] = max(dp[w - wi, i - 1] + val[i], dp[w, i - 1]);
+            else
+                dp[w, i] = dp[w, i - 1];    
+        }
+    }
+    return dp[W, n];
+}
+</code></pre><p>faster implemetation: use hashtable to store dp[w].</p>
+<h2 id="placing-parentheses"><a href="#placing-parentheses" class="headerlink" title="placing parentheses"></a>placing parentheses</h2><p>Given a mathematical expression, output its maximum value by placing parentheses in different places. E.g., given 5 - 8 + 7 * 4 - 8 + 9, output 130. The key point is to compute the min and max value of sub-expression exp(i,j), using $ max_{i \leq k \leq j, op \in {+, -, *}}(min(i,k) op min(k,j), … max(i,k) op max(j, k)) $.</p>
+<pre><code>placing parentheses(d1op1d2op2...dn){
+    dp[0..n, 0..n] = 0;
+    for len in [0..n]{
+        for start in [0..n-len]{
+            end = start + len;
+            m[start, end], M[start, end] = minAndMax(start, end);
+        }
+    }
+    return M(1, n);
+}
+</code></pre><p><img title="example" src="/2017/03/20/dynamic-programming/placing_parentheses.png" width="50%" height="50%"></p>
+
+      
+    </div>
+
+    <div>
+      
         
-          <p>This post is to review the frequently asked problems in dynamic programming.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/20/dynamic-programming/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://moyuanhuang.github.io/2017/03/19/divide-and-conquer-basic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Moyuan Huang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="my.huang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/19/divide-and-conquer-basic/" itemprop="url">
-                  divide and conquer: basic
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T22:00:48-07:00">
-                2017-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/19/divide-and-conquer-basic/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/19/divide-and-conquer-basic/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+      
 
-<p>This post is to review the frequently asked problems in divide and conquer, including multiplication of polynomials, merge sort and quick sort.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/19/divide-and-conquer-basic/#more" rel="contents">
-              Read more &raquo;
-            </a>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/19/divide-and-conquer-basic/" rel="next" title="divide and conquer: basic">
+                <i class="fa fa-chevron-left"></i> divide and conquer: basic
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://moyuanhuang.github.io/2017/03/18/greedy-algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Moyuan Huang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="my.huang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/18/greedy-algorithm/" itemprop="url">
-                  greedy algorithm: basic
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-18T21:39:48-07:00">
-                2017-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/18/greedy-algorithm/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/18/greedy-algorithm/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<p>This most is to review the very basic problems in greedy algorithm. </p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/18/greedy-algorithm/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://moyuanhuang.github.io/2017/03/17/relevant-CLI-for-rails/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Moyuan Huang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="my.huang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/17/relevant-CLI-for-rails/" itemprop="url">
-                  relevant CLI for rails
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T01:37:17-07:00">
-                2017-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/17/relevant-CLI-for-rails/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/17/relevant-CLI-for-rails/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<p>As a ruby beginner(or even a full-stack development beginner!), it took me couple of days to setup the environment of ruby and rails. As you might also have experienced the issues below, I recorded it in hope that it may help.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/17/relevant-CLI-for-rails/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
           
           </div>
@@ -807,6 +490,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -826,8 +520,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -880,6 +583,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#coin-changing"><span class="nav-number">1.</span> <span class="nav-text">coin changing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edit-distance"><span class="nav-number">2.</span> <span class="nav-text">edit distance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#knapsack"><span class="nav-number">3.</span> <span class="nav-text">knapsack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#placing-parentheses"><span class="nav-number">4.</span> <span class="nav-text">placing parentheses</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -992,6 +711,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
@@ -1008,9 +731,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'myhuang';
-      var disqus_identifier = 'index.html';
+      var disqus_identifier = '2017/03/20/dynamic-programming/';
 
-      var disqus_title = "";
+      var disqus_title = "dynamic programming";
 
 
       function run_disqus_script(disqus_script) {
@@ -1023,6 +746,13 @@
 
       run_disqus_script('count.js');
 
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
       
 
     </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->

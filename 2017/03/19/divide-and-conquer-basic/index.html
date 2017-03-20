@@ -87,19 +87,16 @@
 
 
 
-<meta name="description" content="Multiplying polynomialsinput $A(x) = 3x^2 + 2x + 5$,and $B(x) = 5x^2 + x + 2$compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$
-simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
+<meta name="description" content="This post is to review the frequently asked problems in divide and conquer, including multiplication of polynomials, merge sort and quick sort.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="divide and conquer: basic">
 <meta property="og:url" content="https://moyuanhuang.github.io/2017/03/19/divide-and-conquer-basic/index.html">
 <meta property="og:site_name" content="my.huang">
-<meta property="og:description" content="Multiplying polynomialsinput $A(x) = 3x^2 + 2x + 5$,and $B(x) = 5x^2 + x + 2$compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$
-simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
-<meta property="og:updated_time" content="2017-03-20T05:25:09.000Z">
+<meta property="og:description" content="This post is to review the frequently asked problems in divide and conquer, including multiplication of polynomials, merge sort and quick sort.">
+<meta property="og:updated_time" content="2017-03-20T21:35:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="divide and conquer: basic">
-<meta name="twitter:description" content="Multiplying polynomialsinput $A(x) = 3x^2 + 2x + 5$,and $B(x) = 5x^2 + x + 2$compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$
-simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
+<meta name="twitter:description" content="This post is to review the frequently asked problems in divide and conquer, including multiplication of polynomials, merge sort and quick sort.">
 
 
 
@@ -347,6 +344,8 @@ simplyfying input &amp;amp; output$ n = 3, A = (3,2,5), B = (5,1,2) $$">
         <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
+<p>This post is to review the frequently asked problems in divide and conquer, including multiplication of polynomials, merge sort and quick sort.</p>
+<a id="more"></a>
 <h2 id="Multiplying-polynomials"><a href="#Multiplying-polynomials" class="headerlink" title="Multiplying polynomials"></a>Multiplying polynomials</h2><p>input $A(x) = 3x^2 + 2x + 5$,<br>and $B(x) = 5x^2 + x + 2$<br>compute $A(x)B(x) = 15x^4 + 13x^3 + 33x^2 + 9x + 10$</p>
 <h3 id="simplyfying-input-amp-output"><a href="#simplyfying-input-amp-output" class="headerlink" title="simplyfying input &amp; output"></a>simplyfying input &amp; output</h3><p>$ n = 3, A = (3,2,5), B = (5,1,2) $<br>$ c = (15,13,33,9,10) $</p>
 <h3 id="naive-divide-amp-conquer"><a href="#naive-divide-amp-conquer" class="headerlink" title="naive divide &amp; conquer"></a>naive divide &amp; conquer</h3><p>We can now just look at the index. Divide A(x) into two equal length part[0..n/2-1], [n/2..n-1]. Do the same to B(x).</p>
@@ -486,6 +485,10 @@ for all k in [m2..right], A[k] &gt; x
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/03/20/dynamic-programming/" rel="prev" title="dynamic programming">
+                dynamic programming <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -563,7 +566,7 @@ for all k in [m2..right], A[k] &gt; x
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
